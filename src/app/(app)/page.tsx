@@ -118,9 +118,6 @@ export default async function PainelPage() {
                         <div className="row" style={{ gap: 8, marginBottom: 4 }}>
                           <StatusBadge status={cesta.status} />
                           <span className="tiny muted mono">#{cesta.id}</span>
-                          <span className={`badge ${cesta.posse === "CLIENTE" ? "outline" : "warn"}`}>
-                            posse {cesta.posse === "CLIENTE" ? "cliente" : "suporte"}
-                          </span>
                         </div>
                         <Link href={`/cestas/${cesta.id}`} className="list-title clamp-2" style={{ display: "block" }}>
                           {cesta.objeto}

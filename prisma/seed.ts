@@ -679,7 +679,6 @@ async function main() {
     categorias: number[];
     status: string;
     situacao: string;
-    posse: string;
     diasAtras: number;
     prazoDias: number | null;
     itens: Array<{ codigo: string; quantidade: number }>;
@@ -698,7 +697,6 @@ async function main() {
         casasDecimais: 2,
         dataSolicitacao: daysAgo(opts.diasAtras),
         situacao: opts.situacao,
-        posse: opts.posse,
         status: opts.status,
         prazoEnvioCotacoes: opts.prazoDias != null ? daysAgo(opts.diasAtras - opts.prazoDias) : null,
         observacao: opts.observacao ?? null,
@@ -781,7 +779,6 @@ async function main() {
     categorias: [75, 84],
     status: "PRONTA",
     situacao: "CLIENTE",
-    posse: "CLIENTE",
     diasAtras: 46,
     prazoDias: 15,
     itens: [
@@ -802,7 +799,6 @@ async function main() {
     categorias: [105],
     status: "EM_ANDAMENTO",
     situacao: "SUPORTE",
-    posse: "SUPORTE",
     diasAtras: 18,
     prazoDias: 10,
     itens: [
@@ -824,7 +820,6 @@ async function main() {
       casasDecimais: 2,
       dataSolicitacao: daysAgo(3),
       situacao: "CLIENTE",
-      posse: "CLIENTE",
       status: "EM_ABERTO",
       categorias: { create: [{ categoriaId: categoriaMap.get(10)! }] },
       lotes: { create: [{ nome: "ANEXO I - LOTE 001", ordem: 1 }] },

@@ -109,9 +109,6 @@ export default async function CestaDetalhePage({ params }: { params: Promise<{ i
           <div className="stat-label">Status</div>
           <div className="row" style={{ marginTop: 10, gap: 6, flexWrap: "wrap" }}>
             <StatusBadge status={cesta.status} />
-            <span className={`badge ${cesta.posse === "CLIENTE" ? "outline" : "warn"}`}>
-              posse {cesta.posse.toLowerCase()}
-            </span>
             {cesta.situacao === "SUPORTE" ? <span className="badge info">suporte</span> : null}
           </div>
           <div className="stat-meta">
@@ -277,9 +274,9 @@ export default async function CestaDetalhePage({ params }: { params: Promise<{ i
                 </dd>
                 <dt>Data da solicitação</dt>
                 <dd>{dateBR(cesta.dataSolicitacao)}</dd>
-                <dt>Situação / posse</dt>
+                <dt>Situação</dt>
                 <dd>
-                  {cesta.situacao === "CLIENTE" ? "Cliente" : "Suporte"} · posse {cesta.posse.toLowerCase()}
+                  {cesta.situacao === "CLIENTE" ? "Cliente" : "Suporte"}
                 </dd>
                 <dt>Prazo de cotações</dt>
                 <dd>{cesta.prazoEnvioCotacoes ? dateBR(cesta.prazoEnvioCotacoes) : "sem prazo definido"}</dd>

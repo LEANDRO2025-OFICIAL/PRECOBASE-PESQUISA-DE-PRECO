@@ -20,7 +20,7 @@ const p = new PrismaClient();
   };
   console.log(JSON.stringify(counts, null, 2));
   const cestas = await p.cesta.findMany({
-    select: { id: true, objeto: true, status: true, posse: true, _count: { select: { itens: true } } },
+    select: { id: true, objeto: true, status: true, _count: { select: { itens: true } } },
   });
   console.log(JSON.stringify(cestas, null, 2));
   await p.$disconnect();

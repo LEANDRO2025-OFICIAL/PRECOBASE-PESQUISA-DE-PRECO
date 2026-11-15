@@ -227,7 +227,6 @@ model Cesta {
   casasDecimais                 Int       @default(2)
   dataSolicitacao               DateTime  @default(now())
   situacao                      String    @default("CLIENTE") // SUPORTE | CLIENTE
-  posse                         String    @default("CLIENTE")
   status                        String    @default("EM_ABERTO") // EM_ABERTO | EM_ANDAMENTO | PRONTA | FINALIZADA
   prazoEnvioCotacoes            DateTime?
   observacao                    String?

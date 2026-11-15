@@ -26,7 +26,7 @@ const TABS = [
   ["FINALIZADA", "Finalizadas"],
 ] as const;
 
-type SP = { status?: string; q?: string; secretariaId?: string; posse?: string };
+type SP = { status?: string; q?: string; secretariaId?: string };
 
 export default async function CestasPage({ searchParams }: { searchParams: Promise<SP> }) {
   const session = await requireSession();
@@ -34,10 +34,9 @@ export default async function CestasPage({ searchParams }: { searchParams: Promi
   const status = sp.status ?? "TODAS";
   const q = sp.q?.trim() ?? "";
   const secretariaId = Number(sp.secretariaId) || undefined;
-  const posse = sp.posse || undefined;
 
   const [cestas, contagens, secretarias] = await Promise.all([
-    listarCestas(session.tid, { status, q, secretariaId, posse }),
+    listarCestas(session.tid, { status, q, secretariaId }),
     contarPorStatus(session.tid),
     prisma.secretaria.findMany({ where: { tenantId: session.tid, ativo: true }, orderBy: { nome: "asc" } }),
   ]);
@@ -69,7 +68,6 @@ export default async function CestasPage({ searchParams }: { searchParams: Promi
             if (valor !== "TODAS") params.set("status", valor);
             if (q) params.set("q", q);
             if (sp.secretariaId) params.set("secretariaId", sp.secretariaId);
-            if (posse) params.set("posse", posse);
             const href = params.toString() ? `/cestas?${params}` : "/cestas";
             return (
               <Link
@@ -107,15 +105,10 @@ export default async function CestasPage({ searchParams }: { searchParams: Promi
               </option>
             ))}
           </select>
-          <select className="select" name="posse" defaultValue={posse ?? ""} style={{ width: 150 }}>
-            <option value="">Qualquer posse</option>
-            <option value="CLIENTE">Cliente</option>
-            <option value="SUPORTE">Suporte</option>
-          </select>
           <button className="btn" type="submit">
             <Filter /> Filtrar
           </button>
-          {q || sp.secretariaId || posse ? (
+          {q || sp.secretariaId ? (
             <Link href="/cestas" className="btn btn-ghost btn-sm">
               Limpar
             </Link>
@@ -146,9 +139,6 @@ export default async function CestasPage({ searchParams }: { searchParams: Promi
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div className="row wrap" style={{ gap: 7, marginBottom: 6 }}>
                       <StatusBadge status={cesta.status} />
-                      <span className={`badge ${cesta.posse === "CLIENTE" ? "outline" : "warn"}`}>
-                        <UserRound style={{ width: 11, height: 11 }} /> posse {cesta.posse.toLowerCase()}
-                      </span>
                       {cesta.situacao === "SUPORTE" ? <span className="badge info">suporte</span> : null}
                       <span className="tiny muted mono">#{cesta.id}</span>
                       {cesta.token ? <span className="chip-alert">LINK PÚBLICO</span> : null}

@@ -148,13 +148,11 @@ export type FiltroCestas = {
   status?: string;
   q?: string;
   secretariaId?: number;
-  posse?: string;
 };
 
 export async function listarCestas(tenantId: number, filtro: FiltroCestas = {}) {
   const where: Prisma.CestaWhereInput = { tenantId };
   if (filtro.status && filtro.status !== "TODAS") where.status = filtro.status;
-  if (filtro.posse) where.posse = filtro.posse;
   if (filtro.secretariaId) where.secretariaId = filtro.secretariaId;
   if (filtro.q) {
     where.OR = [

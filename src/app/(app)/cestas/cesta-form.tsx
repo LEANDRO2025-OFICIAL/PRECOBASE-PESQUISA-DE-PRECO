@@ -25,7 +25,6 @@ export type CestaFormDefaults = {
   casasDecimais: string;
   dataSolicitacao: string;
   situacao: string;
-  posse: string;
   prazoEnvioCotacoes: string;
   observacao: string;
   informacoesRodape: string;
@@ -49,7 +48,6 @@ const VAZIO: CestaFormDefaults = {
   casasDecimais: "2",
   dataSolicitacao: new Date().toISOString().slice(0, 10),
   situacao: "CLIENTE",
-  posse: "CLIENTE",
   prazoEnvioCotacoes: "",
   observacao: "",
   informacoesRodape: "",
@@ -256,18 +254,7 @@ export function CestaForm({
             </div>
           </div>
 
-          <label className="switch" style={{ alignSelf: "flex-start" }}>
-            <input type="checkbox" name="posse" value="CLIENTE" defaultChecked={d.posse === "CLIENTE"} />
-            <span className="switch-track" />
-            <span>
-              <span className="strong" style={{ fontSize: 13 }}>
-                Posse do cliente
-              </span>
-              <span className="hint" style={{ display: "block" }}>
-                Desligue para manter a cesta em posse do suporte.
-              </span>
-            </span>
-          </label>
+          
         </div>
       </div>
 

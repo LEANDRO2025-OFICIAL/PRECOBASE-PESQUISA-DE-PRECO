@@ -177,18 +177,18 @@ export default async function NovoItemPage({
                                   {r.descricao.length > 140 ? `${r.descricao.slice(0, 140)}…` : r.descricao}
                                 </div>
                                 {r.classe ? <div className="tiny muted">{r.classe}</div> : null}
-                                {!isBds && r.ncm ? <div className="tiny muted">NCM {r.ncm}</div> : null}
+                                {!isProprio && r.ncm ? <div className="tiny muted">NCM {r.ncm}</div> : null}
                               </td>
                               <td className="muted small">{r.grupo ?? "—"}</td>
                               <td className="muted">{r.unidade ?? "UN"}</td>
                               <td>
                                 <form
-                                  action={isBds ? adicionarItemCatalogo : adicionarItemCatalogoExterno}
+                                  action={isProprio ? adicionarItemCatalogo : adicionarItemCatalogoExterno}
                                   className="row"
                                   style={{ gap: 6 }}
                                 >
                                   <input type="hidden" name="cestaId" value={cesta.id} />
-                                  {isBds ? (
+                                  {isProprio ? (
                                     <input type="hidden" name="produtoId" value={String(r.id)} />
                                   ) : (
                                     <>

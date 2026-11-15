@@ -224,7 +224,6 @@ async function gerarXLSX(cesta: any, resumo: any) {
     ["Tipo de cálculo:", cesta.tipoCalculo.replace("_", " ")],
     ["Casas decimais:", casas],
     ["Situação:", cesta.situacao],
-    ["Posse:", cesta.posse],
     ["Status:", cesta.status],
   ];
   for (const [label, value] of info) {

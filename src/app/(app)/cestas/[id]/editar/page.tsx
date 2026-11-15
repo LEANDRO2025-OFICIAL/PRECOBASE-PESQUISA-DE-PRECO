@@ -58,7 +58,6 @@ export default async function EditarCestaPage({ params }: { params: Promise<{ id
           casasDecimais: String(cesta.casasDecimais),
           dataSolicitacao: isoDate(cesta.dataSolicitacao),
           situacao: cesta.situacao,
-          posse: cesta.posse,
           prazoEnvioCotacoes: isoDate(cesta.prazoEnvioCotacoes),
           observacao: cesta.observacao ?? "",
           informacoesRodape: cesta.informacoesRodape ?? "",
