@@ -1,0 +1,455 @@
+// PreçoBase — schema de dados
+// Espelha as 12 entidades do recon (instituição, usuário, produto, fonte, preço,
+// cesta, item, apuração, correção por índice, documento, cotação, fornecedor)
+// mais os catálogos auxiliares que o app precisa para operar.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─────────────────────────────────────────────────────────────
+// Multi-tenant
+// ─────────────────────────────────────────────────────────────
+
+model Tenant {
+  id          Int       @id @default(autoincrement())
+  nome        String
+  cnpj        String?
+  municipio   String?
+  uf          String?
+  logoUrl     String?
+  plano       String    @default("PROFISSIONAL")
+  contratoAte DateTime?
+  createdAt   DateTime  @default(now())
+
+  usuarios     User[]
+  secretarias  Secretaria[]
+  cestas       Cesta[]
+  fornecedores Fornecedor[]
+  cotacoes     Cotacao[]
+  informativos Informativo[]
+
+  @@map("tenants")
+}
+
+model User {
+  id           Int       @id @default(autoincrement())
+  tenantId     Int
+  nome         String
+  email        String
+  cpf          String?
+  senhaHash    String
+  papel        String    @default("OPERADOR") // ADMIN | GESTOR | OPERADOR
+  nivel        Int       @default(2)
+  ativo        Boolean   @default(true)
+  ultimoAcesso DateTime?
+  createdAt    DateTime  @default(now())
+
+  tenant Tenant  @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  cestas Cesta[]
+
+  @@unique([tenantId, email])
+  @@index([email])
+  @@map("users")
+}
+
+model Secretaria {
+  id       Int     @id @default(autoincrement())
+  tenantId Int
+  nome     String
+  sigla    String?
+  ativo    Boolean @default(true)
+
+  tenant Tenant  @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  cestas Cesta[]
+
+  @@index([tenantId])
+  @@map("secretarias")
+}
+
+// ─────────────────────────────────────────────────────────────
+// Catálogos
+// ─────────────────────────────────────────────────────────────
+
+model CategoriaObjeto {
+  id     Int     @id @default(autoincrement())
+  codigo Int     @unique
+  nome   String
+  tipo   String  @default("AQUISICAO") // AQUISICAO | CONSUMO | SERVICO
+  ativo  Boolean @default(true)
+
+  cestas CestaCategoria[]
+
+  @@map("categorias_objeto")
+}
+
+// ─────────────────────────────────────────────────────────────
+// Catálogos externos (CATMAT / CATSER)
+// ─────────────────────────────────────────────────────────────
+
+model CatalogoItem {
+  id          Int      @id @default(autoincrement()) @map("id")
+  origem      String   @default("CATMAT") @map("origem") // CATMAT | CATSER | BDS
+  codigo      String   @map("codigo") // código do item no catálogo de origem
+  descricao   String   @map("descricao")
+  grupo       String?  @map("grupo")
+  classe      String?  @map("classe")
+  unidade     String?  @default("UN") @map("unidade")
+  ncm         String?  @map("ncm")
+  statusItem  Boolean  @default(true) @map("status_item")
+  atualizadoEm DateTime @default(now()) @map("atualizado_em")
+
+  @@unique([origem, codigo], name: "catalogo_itens_origem_codigo_key")
+  @@index([descricao], name: "idx_catalogo_itens_descricao")
+  @@index([origem], name: "idx_catalogo_itens_origem")
+  @@map("catalogo_itens")
+}
+
+model LogImportacaoCatalogo {
+  id          Int       @id @default(autoincrement()) @map("id")
+  origem      String    @map("origem") // CATMAT | CATSER
+  pagina      Int       @map("pagina")
+  tamanho     Int       @map("tamanho")
+  registros   Int       @default(0) @map("registros")
+  inseridos   Int       @default(0) @map("inseridos")
+  atualizados Int       @default(0) @map("atualizados")
+  erro        String?   @map("erro")
+  executadoEm DateTime  @default(now()) @map("executado_em")
+
+  @@map("log_importacao_catalogo")
+}
+
+model Produto {
+  id          Int      @id @default(autoincrement())
+  codigoBr    String   @unique
+  descricao   String
+  unidade     String   @default("UN")
+  grupo       String?
+  categoriaId Int?
+  ativo       Boolean  @default(true)
+  createdAt   DateTime @default(now())
+
+  itens  CestaItem[]
+  precos Preco[]
+
+  @@index([descricao])
+  @@index([grupo])
+  @@map("produtos")
+}
+
+model Fornecedor {
+  id           Int      @id @default(autoincrement())
+  tenantId     Int?
+  cnpj         String
+  razaoSocial  String
+  nomeFantasia String?
+  email        String?
+  telefone     String?
+  municipio    String?
+  uf           String?
+  ramos        String[] @default([])
+  ativo        Boolean  @default(true)
+  createdAt    DateTime @default(now())
+
+  tenant   Tenant?             @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  cotacoes CotacaoFornecedor[]
+
+  @@unique([tenantId, cnpj])
+  @@index([razaoSocial])
+  @@map("fornecedores")
+}
+
+model Fonte {
+  id             Int     @id @default(autoincrement())
+  sigla          String  @unique
+  nome           String
+  tipo           String  @default("PUBLICA") // PUBLICA | CONVENIO | HISTORICO | REFERENCIA
+  requerConvenio Boolean @default(false)
+  ativo          Boolean @default(true)
+  ordem          Int     @default(0)
+
+  precos Preco[]
+
+  @@map("fontes")
+}
+
+// ─────────────────────────────────────────────────────────────
+// Preços (acervo consultado)
+// ─────────────────────────────────────────────────────────────
+
+model Preco {
+  id           Int      @id @default(autoincrement())
+  produtoId    Int
+  fonteId      Int
+  orgao        String
+  uf           String
+  municipio    String?
+  data         DateTime
+  valor        Decimal  @db.Decimal(14, 4)
+  quantidade   Decimal? @db.Decimal(14, 4)
+  unidade      String?
+  descricao    String?
+  documentoUrl String?
+  documentoRef String?
+  dispensa     Boolean  @default(false)
+  createdAt    DateTime @default(now())
+
+  produto Produto @relation(fields: [produtoId], references: [id], onDelete: Cascade)
+  fonte   Fonte   @relation(fields: [fonteId], references: [id])
+
+  vinculos ItemPreco[]
+
+  @@index([produtoId, data])
+  @@index([fonteId])
+  @@index([uf])
+  @@map("precos")
+}
+
+// ─────────────────────────────────────────────────────────────
+// Cesta de preços
+// ─────────────────────────────────────────────────────────────
+
+model Cesta {
+  id                            Int       @id @default(autoincrement())
+  token                         String?   @unique
+  tenantId                      Int
+  usuarioId                     Int?
+  objeto                        String
+  objetoDetalhado               String?
+  secretariaId                  Int?
+  tipoContratacao               String    @default("LICITACAO")
+  tipoCalculo                   String    @default("MEDIA_ARITMETICA") // MEDIA_ARITMETICA | MEDIANA | MENOR | MAIOR
+  casasDecimais                 Int       @default(2)
+  dataSolicitacao               DateTime  @default(now())
+  situacao                      String    @default("CLIENTE") // SUPORTE | CLIENTE
+  posse                         String    @default("CLIENTE")
+  status                        String    @default("EM_ABERTO") // EM_ABERTO | EM_ANDAMENTO | PRONTA | FINALIZADA
+  prazoEnvioCotacoes            DateTime?
+  observacao                    String?
+  informacoesRodape             String?
+  alertaPercentual              Int       @default(18)
+  priorizarPrecosPraticadosDias Int       @default(270)
+  mapaVerticalizarColunas       Int       @default(12)
+  corrigirIncidirSobre          String? // DESCRICAO | VALOR
+  corrigirIndice                String?
+  corrigirDataInicial           DateTime?
+  corrigirDataFinal             DateTime?
+  finalizadaEm                  DateTime?
+  createdAt                     DateTime  @default(now())
+  updatedAt                     DateTime  @updatedAt
+
+  tenant     Tenant           @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  usuario    User?            @relation(fields: [usuarioId], references: [id], onDelete: SetNull)
+  secretaria Secretaria?      @relation(fields: [secretariaId], references: [id], onDelete: SetNull)
+  categorias CestaCategoria[]
+  lotes      Lote[]
+  itens      CestaItem[]
+  documentos Documento[]
+  cotacoes   Cotacao[]
+
+  @@index([tenantId, status])
+  @@map("cestas")
+}
+
+model CestaCategoria {
+  cestaId     Int
+  categoriaId Int
+
+  cesta     Cesta           @relation(fields: [cestaId], references: [id], onDelete: Cascade)
+  categoria CategoriaObjeto @relation(fields: [categoriaId], references: [id], onDelete: Cascade)
+
+  @@id([cestaId, categoriaId])
+  @@map("cestas_categorias")
+}
+
+model Lote {
+  id      Int    @id @default(autoincrement())
+  cestaId Int
+  nome    String
+  ordem   Int    @default(1)
+
+  cesta Cesta       @relation(fields: [cestaId], references: [id], onDelete: Cascade)
+  itens CestaItem[]
+
+  @@index([cestaId])
+  @@map("lotes")
+}
+
+model CestaItem {
+  id            Int      @id @default(autoincrement())
+  cestaId       Int
+  loteId        Int?
+  produtoId     Int?
+  descricao     String
+  unidade       String   @default("UN")
+  quantidade    Decimal  @default(0) @db.Decimal(14, 4)
+  ordem         Int      @default(1)
+  situacao      String   @default("ATIVO")
+  pesquisarPor  String[] @default([])
+  observacao    String?
+  justificativa String?
+  createdAt     DateTime @default(now())
+
+  cesta    Cesta       @relation(fields: [cestaId], references: [id], onDelete: Cascade)
+  lote     Lote?       @relation(fields: [loteId], references: [id], onDelete: SetNull)
+  produto  Produto?    @relation(fields: [produtoId], references: [id], onDelete: SetNull)
+  apuracao Apuracao?
+  precos   ItemPreco[]
+
+  @@index([cestaId, ordem])
+  @@map("cesta_itens")
+}
+
+model ItemPreco {
+  id             Int       @id @default(autoincrement())
+  itemId         Int
+  precoId        Int?
+  selecionado    Boolean   @default(false)
+  origem         String    @default("FONTE") // FONTE | MANUAL
+  valorManual    Decimal?  @db.Decimal(14, 4)
+  orgaoManual    String?
+  ufManual       String?
+  dataManual     DateTime?
+  valorCorrigido Decimal?  @db.Decimal(14, 4)
+  fatorCorrecao  Decimal?  @db.Decimal(14, 4)
+  createdAt      DateTime  @default(now())
+
+  item  CestaItem @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  preco Preco?    @relation(fields: [precoId], references: [id], onDelete: Cascade)
+
+  @@unique([itemId, precoId])
+  @@index([itemId])
+  @@map("item_precos")
+}
+
+model Apuracao {
+  id          Int      @id @default(autoincrement())
+  itemId      Int      @unique
+  menor       Decimal  @db.Decimal(14, 4)
+  media       Decimal  @db.Decimal(14, 4)
+  mediana     Decimal  @db.Decimal(14, 4)
+  maior       Decimal  @db.Decimal(14, 4)
+  metodo      String   @default("MEDIA_ARITMETICA")
+  qtdPrecos   Int      @default(0)
+  calculadoEm DateTime @default(now())
+
+  item CestaItem @relation(fields: [itemId], references: [id], onDelete: Cascade)
+
+  @@map("apuracoes")
+}
+
+model Documento {
+  id        Int      @id @default(autoincrement())
+  cestaId   Int
+  nome      String
+  tipo      String   @default("COMPROVANTE")
+  tamanho   Int      @default(0)
+  url       String?
+  conteudo  Bytes?
+  createdAt DateTime @default(now())
+
+  cesta Cesta @relation(fields: [cestaId], references: [id], onDelete: Cascade)
+
+  @@index([cestaId])
+  @@map("documentos")
+}
+
+// ─────────────────────────────────────────────────────────────
+// Cotações (fatia 3)
+// ─────────────────────────────────────────────────────────────
+
+model Cotacao {
+  id         Int       @id @default(autoincrement())
+  tenantId   Int
+  cestaId    Int?
+  titulo     String
+  prazo      DateTime?
+  status     String    @default("RASCUNHO") // RASCUNHO | ENVIADA | RESPONDIDA | ENCERRADA
+  observacao String?
+  createdAt  DateTime  @default(now())
+
+  tenant       Tenant              @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  cesta        Cesta?              @relation(fields: [cestaId], references: [id], onDelete: SetNull)
+  fornecedores CotacaoFornecedor[]
+  itens        CotacaoItem[]
+
+  @@index([tenantId])
+  @@map("cotacoes")
+}
+
+model CotacaoFornecedor {
+  id           Int       @id @default(autoincrement())
+  cotacaoId    Int
+  fornecedorId Int
+  enviadoEm    DateTime  @default(now())
+  respondidoEm DateTime?
+  token        String    @unique
+
+  cotacao    Cotacao    @relation(fields: [cotacaoId], references: [id], onDelete: Cascade)
+  fornecedor Fornecedor @relation(fields: [fornecedorId], references: [id], onDelete: Cascade)
+
+  @@unique([cotacaoId, fornecedorId])
+  @@map("cotacoes_fornecedores")
+}
+
+model CotacaoItem {
+  id            Int      @id @default(autoincrement())
+  cotacaoId     Int
+  descricao     String
+  unidade       String   @default("UN")
+  quantidade    Decimal  @default(0) @db.Decimal(14, 4)
+  precoOfertado Decimal? @db.Decimal(14, 4)
+
+  cotacao Cotacao @relation(fields: [cotacaoId], references: [id], onDelete: Cascade)
+
+  @@index([cotacaoId])
+  @@map("cotacoes_itens")
+}
+
+// ─────────────────────────────────────────────────────────────
+// Comunicação e referência
+// ─────────────────────────────────────────────────────────────
+
+model Informativo {
+  id          Int      @id @default(autoincrement())
+  tenantId    Int?
+  titulo      String
+  resumo      String?
+  corpo       String
+  categoria   String   @default("GERAL")
+  publicadoEm DateTime @default(now())
+
+  tenant Tenant? @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@map("informativos")
+}
+
+model Indice {
+  id    Int     @id @default(autoincrement())
+  sigla String  @unique
+  nome  String
+  fonte String  @default("IBGE")
+  ativo Boolean @default(true)
+
+  valores IndiceValor[]
+
+  @@map("indices")
+}
+
+model IndiceValor {
+  id          Int      @id @default(autoincrement())
+  indiceId    Int
+  competencia String // YYYY-MM
+  variacao    Decimal  @db.Decimal(10, 6)
+  acumulado   Decimal? @db.Decimal(10, 6)
+
+  indice Indice @relation(fields: [indiceId], references: [id], onDelete: Cascade)
+
+  @@unique([indiceId, competencia])
+  @@map("indices_valores")
+}

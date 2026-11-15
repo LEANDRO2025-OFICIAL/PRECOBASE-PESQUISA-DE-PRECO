@@ -1,0 +1,35 @@
+feature,area,priority,original,clone,notes
+Login por CPF/CNPJ com seleção de instituição,auth,must,yes,yes,multi-tenant: um usuário pode ter mais de um órgão
+Multiusuário com rastreabilidade de ações,auth,must,yes,yes,log de auditoria por usuário
+Catálogo padronizado de produtos e serviços,catalogo,must,yes,yes,busca por descrição; formato #ID (BR…) DESCRIÇÃO UN
+Catálogo de fornecedores por objeto ou produto,fornecedores,must,yes,yes,no alvo está desabilitado; nossa versão ativa
+Pesquisa de preços nas bases oficiais,pesquisa,must,yes,yes,loop central
+Integração PNCP,integracoes,must,yes,yes,API pública de consulta
+Integração CGU NFE,integracoes,must,yes,yes,aba CGU NFE no seletor de fontes
+Integração Compras.gov,integracoes,must,yes,yes,aba COMPRAS GOV
+Histórico de preços da entidade,pesquisa,must,yes,yes,aba HISTÓRICO
+Montar cesta de preços,cesta,must,yes,yes,objeto, secretaria, tipo de contratação, tipo de cálculo
+Mapa de apuração de preços,apuracao,must,yes,yes,RELATÓRIOS > MÉDIA DE PREÇOS (MAPA) em PDF e XLS
+Relatórios com histórico, médias e justificativas,relatorios,must,yes,yes,
+Cotação eletrônica com fornecedores,cotacao,must,yes,yes,prazo para envio de cotações na cesta
+Seletor de fontes de pesquisa (30+),pesquisa,must,yes,yes,abas SELECIONAR/PADRÕES/UTILIZADAS com editar e salvar
+Filtros de pesquisa de preços,pesquisa,must,yes,yes,incluir dispensas, janela de dias, faixa de preço, faixa de qtde, UF
+Resumo menor/média/mediana/maior por item,apuracao,must,yes,yes,bloco com ícones; colunas na cesta
+Correção de preços por índices oficiais,apuracao,should,yes,yes,CORRIGIR VALORES: incidir sobre, índice, data inicial, data final
+Alerta de distorção de preços,apuracao,should,yes,yes,chip ALERTA 18% na tela de pesquisa
+Casas decimais configuráveis por cesta,apuracao,should,yes,yes,2/3/4 no detalhe da cesta
+Anexos de editais e documentos,anexos,should,yes,yes,ARQUIVOS COMPROVAS com tipo, tamanho e data
+QR Code para documentos das pesquisas,documentos,should,yes,yes,campo QR Code DOCUMENTOS DAS PESQUISAS
+Posse da cesta (cliente/suporte) com bloqueio,cesta,should,yes,yes,altera quem pode pesquisar; banner azul no detalhe
+Agrupamento por anexo e lote,cesta,should,yes,yes,ANEXO I - LOTE 001
+Integração BPS,integracoes,should,yes,no,pode exigir convênio
+Integração Portal de Compras Públicas,integracoes,should,yes,no,pode exigir convênio
+Tabelas de referência CMED SINAPI CONAB,referencia,could,yes,no,
+Integração LicitaNet,could,integracoes,yes,no,
+Integração Licita Mais Brasil,integracoes,could,yes,no,
+Integração BLL e BNC,integracoes,could,yes,no,
+Pesquisa rápida de preços sem cesta,pesquisa,could,yes,yes,rota /cesta_precos/pesquisa_rapida
+Painel de abrangência e indicadores,dashboard,could,yes,no,contadores "Cestas finalizadas 50435 / 536"
+Pesquisa NPS,feedback,could,yes,no,modal de 5 perguntas a cada carga da lista de cestas
+Base de preços proprietária da BDS,dados,must,yes,skip,acervo deles: usamos fontes públicas
+Rede de revendas,comercial,must,yes,skip,canal comercial não é funcionalidade

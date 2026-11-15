@@ -1,0 +1,80 @@
+{
+  "_meta": {
+    "capturedAt": "2026-11-14",
+    "target": "https://app.bdsgp.com.br",
+    "note": "Contratos reais observados ao adicionar itens na cesta 175170 e ao ler itens das cestas 173935 / 173107."
+  },
+  "addItem": {
+    "method": "POST",
+    "path": "/cesta_precos/cestas/{cestaId}/itens",
+    "requestBody": {
+      "loteId": 228655,
+      "quantidade": 0.0,
+      "item": 0,
+      "produtoBdsId": 1156262,
+      "produtoEspecificacaoId": null,
+      "produtoComplementoId": null,
+      "vinculoAusenteJustificativa": "",
+      "vinculoRevisado": null,
+      "atributos": {},
+      "situacao": "ATIVO",
+      "observacao": "",
+      "justificativa": ""
+    },
+    "responseBody": {
+      "id": 4027150,
+      "clienteId": 5000906,
+      "loteId": 228655,
+      "quantidade": 0,
+      "item": 1,
+      "descricao": null,
+      "unidade": null,
+      "produtoBdsId": 1156262,
+      "produtoEspecificacaoId": null,
+      "vinculoAusenteJustificativa": "",
+      "vinculoRevisado": null,
+      "situacao": "ATIVO",
+      "produtoComplementoId": null,
+      "atributos": {},
+      "pesquisarPor": null,
+      "observacao": "",
+      "justificativa": ""
+    }
+  },
+  "removeItem": {
+    "method": "DELETE",
+    "path": "/cesta_precos/cestas/{cestaId}/itens",
+    "note": "Desmarcar o checkbox do produto no modal 'Selecionar Produtos' dispara DELETE na coleção de itens."
+  },
+  "priceResearchTrigger": {
+    "method": "POST",
+    "path": "/cesta_precos/cestas/{cestaId}/precos_estimados/{itemId}",
+    "note": "Disparado ao marcar o produto no catalogo; calcula o preco estimado do item."
+  },
+  "itemModel": {
+    "id": 4006772,
+    "clienteId": 5000906,
+    "loteId": 226824,
+    "quantidade": 2,
+    "item": 1,
+    "descricao": "texto livre longo do objeto (especificacao tecnica completa)",
+    "unidade": "UNID.",
+    "produtoBdsId": 99,
+    "produtoEspecificacaoId": null,
+    "vinculoAusenteJustificativa": "",
+    "vinculoRevisado": null,
+    "situacao": "ATIVO",
+    "produtoComplementoId": null,
+    "atributos": {},
+    "pesquisarPor": ["CENTRIFUGA", "28t|28 t"],
+    "observacao": "",
+    "justificativa": null,
+    "quantidadesSolicitacoesCorrecoes": { "aguardando": 0, "finalizada": 0 },
+    "quantidadesSolicitacoesProdutos": { "aceita": 0, "recusada": 0, "aguardando": 0 }
+  },
+  "notes": [
+    "produtoBdsId 99 aparece em varios itens de descricao livre => provavelmente o 'produto generico/avulso'.",
+    "pesquisarPor e um array de termos de busca derivado da descricao; o formato 'termo|termo alternativo' agrupa sinonimos.",
+    "Lotes: cada cesta tem lotes (ex.: 228655, 226824, 225790) e os itens apontam para loteId. A UI mostra 'ANEXO I - LOTE 001'."
+  ]
+}

@@ -1,0 +1,50 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Testing
+coverage/
+
+# Next.js
+.out/
+.next/
+
+# Misc
+.dockerignore
+build/
+dist/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+server.log
+
+# Environment
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Prisma
+prisma/migrations/
+
+# Temporary scripts
+scripts/*.cjs
+!scripts/cookie.ts
+!scripts/check.ts
+!scripts/whoami.ts
+!scripts/e2e.cjs
+
+# Build output
+*.tsbuildinfo

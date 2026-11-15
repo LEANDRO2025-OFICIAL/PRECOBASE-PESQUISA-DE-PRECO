@@ -1,0 +1,133 @@
+
+===== PAGINA 1 =====
+RELATÓRIO UNIFICADO DAS PESQUISAS DE PREÇOS
+As informações detalhadas de cada fonte podem ser verificadas através do QR
+Code
+ID
+172928
+DATA
+09/11/2026
+OBJETO
+AQUISIÇÃO DE 03 (TRÊS) COMPUTADORES PORTÁTEIS (NOTEBOOKS) E
+DE 01 (UM) FORNO ELÉTRICO PROFISSIONAL DE CONVECÇÃO PARA A
+SECRETARIA MUNICIPAL DE EDUCAÇÃO E CULTURA, COM RECURSOS DA
+EMENDA IMPOSITIVA
+ITEM
+PRODUTO / SERVIÇO
+UNIDADE /
+QUANTIDADE
+MÉDIA
+ARITMÉTICA
+Anexo
+I
+Lote
+001
+Item
+001
+FORNO ELÉTRICO. Forno elétrico profissional de convecção, destinado ao preparo e
+assamento de alimentos em cozinha institucional, com capacidade mínima para 04
+(quatro) assadeiras de aproximadamente 35 x 35 cm, acompanhadas do equipamento.
+Deverá possuir sistema de circulação forçada de ar quente para proporcionar
+assamento uniforme, controle ajustável de temperatura com faixa de operação que
+alcance, no mínimo, 230 °C, temporizador para controle do tempo de preparo, porta
+com visor para acompanhamento do processo de assamento e isolamento térmico
+adequado. A estrutura deverá ser resistente ao uso profissional, com câmara interna
+em material resistente ao calor e à corrosão, preferencialmente aço inoxidável, e
+superfícies que facilitem a limpeza e a higienização. Deverá possuir suportes para
+acomodação das assadeiras, pés de apoio estáveis e componentes elétricos
+devidamente protegidos. Alimentação elétrica de 220 V, frequência de 60 Hz, com
+potência compatível com a capacidade e o desempenho do equipamento, observada a
+compatibilidade com a instalação elétrica do local. O equipamento deverá ser novo,
+de primeiro uso, acompanhado de manual de instruções em português, garantia mínima
+de 12 (doze) meses e todos os acessórios necessários ao funcionamento normal.
+UNIDADE
+1,00
+3.696,80
+3.696,80
+BLL 10.508.843/0001-57 (R$ 3.200,00): MUNICIPIO DE PARANAIBA/MS - 03.343.118/0001-00 Processo Nº: 0000166 Modalidade:
+PREGÃO ELETRÔNICO Nº0000166 Data: 29/01/2026 Fornecedor: EBENEZER PRESTADORA DE SERVIÇOS LTDA UN: UN QTDE: 16,00 VALOR
+UNITÁRIO: R$ 3.200,00 DESCRIÇÃO: FORNO ELÉTRICO PARA COZINHA PROFISSIONAL
+PNCP 00.000.000/9999-18 (R$ 3.690,00): MUNICIPIO DE MATRINCHA/GO - 24.850.216/0001-04 Processo Nº: 0389 Modalidade:
+Dispensa Nº1531 Data: 10/06/2026 Fornecedor: 37625753000100 - A SHEKINAH MOVEIS DE MATRINCHA LTDA UN: UN QTDE: 1,00 VALOR
+UNITÁRIO: R$ 3.690,00 DESCRIÇÃO: FORNO ELETRICO
+BNC 25.099.967/0001-01 (R$ 3.799,99): MUNICIPIO DE JESUITAS/PR - 77.398.154/0001-08 Processo Nº: 03/2026 Modalidade: PREGÃO
+ELETRÔNICO Nº03/2026 Data: 23/02/2026 Fornecedor: LIDIANE C DOS SANTOS UN: Und QTDE: 3,00 VALOR UNITÁRIO: R$ 3.799,99
+DESCRIÇÃO: FORNO ELETRICO 80 LITROS
+MULTKA COMERCIO LTDA 52.258.610/0001-93 (R$ 3.999,00)
+COMERCIAL VULTY 51040151000104 (R$ 3.795,00)
+ 
+Anexo
+I
+Lote
+001
+Item
+002
+NOTEBOOK. Computador portátil (notebook), novo, de primeiro uso, com processador de
+no mínimo 6 núcleos físicos e 12 threads, frequência turbo de 4,0 GHz ou superior,
+ou desempenho equivalente ou superior; memória RAM de no mínimo 16 GB, padrão DDR4
+ou DDR5; unidade de armazenamento SSD de no mínimo 512 GB, padrão NVMe; tela de no
+mínimo 15,6 polegadas, resolução Full HD (1920 x 1080 pixels), com tratamento
+antirreflexo; placa gráfica integrada ao processador ou superior; sistema
+operacional Windows 11 de 64 bits, original, licenciado, pré-instalado e em
+português do Brasil; conectividade Wi-Fi padrão 802.11ac ou superior e Bluetooth
+5.0 ou superior; webcam integrada com resolução HD ou superior; microfone e alto-
+falantes integrados; teclado padrão ABNT2, com teclado numérico; mínimo de 02
+portas USB, 01 saída HDMI e 01 entrada combinada para fone de ouvido e microfone.
+Deverá acompanhar bateria recarregável, fonte de alimentação original bivolt
+automático, cabo de energia e manuais pertinentes. Garantia mínima de 12 meses,
+prestada pelo fabricante ou pela contratada, conforme condições estabelecidas no
+Termo de Referência. O equipamento deverá ser entregue pronto para uso, com sistema
+operacional instalado e ativado.
+UNIDADE
+3,00
+4.633,42
+13.900,26
+SIMILARES 00.000.000/9999-02 (R$ 4.097,49): Município de Maracaju/MS - 03.442.597/0001-12 Processo Nº: -- Modalidade:
+Dispensa eletrônica Nº9/2025 Data: 11/01/2026 Fornecedor: 61.077.506/****-** - 61.077.506 PEDRO HENRIQUE COSTA CUNHA SANT
+ANA UN: UN QTDE: 5,00 VALOR UNITÁRIO: R$ 4.097,49 DESCRIÇÃO: COMPUTADOR PORTATIL (NOTEBOOK)
+BLL 10.508.843/0001-57 (R$ 4.555,00): MUNICIPIO DE DOURADOS/MS - 03.155.926/0001-44 Processo Nº: 118/2025 Modalidade:
+PREGÃO ELETRÔNICO Nº049/2025 Data: 05/01/2026 Fornecedor: PUBLITEK TECNOLOGIA EIRELI UN: UNID. QTDE: 2,00 VALOR UNITÁRIO:
+R$ 4.555,00 DESCRIÇÃO: NOTEBOOKNOTEBOOK - Processador: Minimo de 6 nucleos e 12 threads, Familias equivalentes: Intel Core
+5, AMD Ryzen 5 PRO serie 7000 ou superiores;- Memoria RAM: o Minimo de 16 GB DDR5, o Possibilidade de expansao para pelo
+menos 32 GB;- Placa grafica: Graficos integrados; - Armazenamento: o SSD com interface M.2 PCIe NVMe, Capacidade minima de
+512 GB. 1) Portas USB: Minimo de 3 (tres) portas USB sendo pelo menos 2 (duas) porta USB 3.0 Tipo A ou superior e 1 (uma)
+USB 3.1 Tipo C; - Conectividade: Rede com fio (Gigabit Ethernet integrada, sem uso de adaptadores externos), Rede sem fio
+(Wi-Fi 6 (802.11ax) integrada, homologada pela Anatel), Bluetooth (Versao 5.0 ou superior integrada); -Teclado: padrao
+ABNT-2; -Touchpad: Integrado ao equipamento, com suporte a gestos multiplos.
+PNCP 00.000.000/9999-18 (R$ 4.300,00): MUNICIPIO DE VICENTINA/MS - 24.644.502/0001-13 Processo Nº: 0026 Modalidade: Pregão
+- Eletrônico Nº24 Data: 05/10/2026 Fornecedor: 53738801000115 - DC SOLUCOES COMERCIO E SERVICOS LTDA UN: un QTDE: 4,00
+VALOR UNITÁRIO: R$ 4.300,00 DESCRIÇÃO: Notebook novo, sem uso anterior, equipado com processador de arquitetura x86-64,
+Município de Antonio João
+ESTADO DE MATO GROSSO DO SUL
+A veracidade das informações pode ser consultada em:
+https://verificador.bdsgp.com.br
+Página 1/2
+
+===== PAGINA 2 =====
+ITEM
+PRODUTO / SERVIÇO
+UNIDADE /
+QUANTIDADE
+MÉDIA
+ARITMÉTICA
+desempenho equivalente ou superior ao Intel Core i5 de 13ª geração, com no mínimo 10 núcleos, frequência turbo de até 4,6
+GHz e cache mínimo de 12 MB; memória RAM mínima de 8 GB DDR4 ou DDR5, expansível para no mínimo 16 GB; unidade de
+armazenamento SSD NVMe PCIe com capacidade mínima de 512 GB; tela LED antirreflexo de no mínimo 15,6 polegadas, resolução
+Full HD (1920 x 1080 pixels); placa gráfica integrada compatível com resolução Full HD; webcam HD (720p) ou superior com
+microfone integrado; conectividade Wi-Fi 6 ou superior e Bluetooth 5.0 ou superior; interface de rede Gigabit Ethernet por
+adaptador ou docking, quando aplicável; no mínimo 03 portas USB, sendo pelo menos 01 USB 3.2, 01 USB-C, 01 saída HDMI,
+conector para áudio combinado (fone/microfone); bateria de íons de lítio com autonomia mínima de 6 horas em uso moderado;
+teclado padrão ABNT2 com teclado numérico integrado; touchpad multitoque; fonte bivolt automática; sistema operacional
+Microsoft Windows 11 Professional 64 bits, licenciado e instalado; acompanhado de carregador original e demais acessórios
+necessários ao pleno funcionamento; garantia mínima de 36 (trinta e seis) meses prestada pelo fabricante ou rede
+autorizada, admitindo-se equipamento de qualidade e desempenho equivalentes ou superiores ao modelo de referência.
+CGU NFE 26.664.015/0001-48 (R$ 4.999,00): UNIVERSIDADE FEDERAL DE VICOSA/MG Processo Nº: 0001 Modalidade: NFE Nº70 Data:
+17/08/2026 Fornecedor: 52495069000137 - FUNDACAO SOCIEDADE DE INVESTIGACOES FLORESTAIS UN: 1 UNID QTDE: 1,00 VALOR
+UNITÁRIO: R$ 4.999,00 DESCRIÇÃO: NOTEBOOK DELL CORE I5/16 GB /SSD 512GB/TELA 15.6 /WINDOWS 11
+MULTKA COMERCIO LTDA 52.258.610/0001-93 (R$ 4.960,00)
+COMERCIAL VULTY 51040151000104 (R$ 4.889,00)
+Município de Antonio João
+ESTADO DE MATO GROSSO DO SUL
+A veracidade das informações pode ser consultada em:
+https://verificador.bdsgp.com.br
+Página 2/2
