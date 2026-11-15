@@ -1,4 +1,4 @@
-# Recon map: BDSGP — Gestão Pública (web, PWA)
+# Recon map: PrecoBase — Gestão Pública (web, PWA)
 
 Scope: app inteiro — pesquisa de preços, cesta/mapa de apuração, catálogos, cotações, relatórios e administração
 For: uso próprio (réplica funcional rebrandeada, clean room)
@@ -8,10 +8,10 @@ Date: 2026-11-14
 
 | # | source | URL | notes |
 | --- | --- | --- | --- |
-| 1 | app (login) | https://app.bdsgp.com.br/login | Flutter Web em canvas: sem DOM útil, recon é por tela/screenshot |
-| 2 | site institucional | https://bdsgp.com.br | lista completa de funcionalidades, portais integrados, posicionamento |
+| 1 | app (login) | https://app.propriosgp.com.br/login | Flutter Web em canvas: sem DOM útil, recon é por tela/screenshot |
+| 2 | site institucional | https://propriosgp.com.br | lista completa de funcionalidades, portais integrados, posicionamento |
 | 3 | Wappalyzer | (CSV do usuário) | PWA, Flutter, Dart, Bootstrap, Nginx, ipify |
-| 4 | conta do usuário | app.bdsgp.com.br | login feito pelo usuário; telas lidas por captura de canvas |
+| 4 | conta do usuário | app.propriosgp.com.br | login feito pelo usuário; telas lidas por captura de canvas |
 | 5 | PNCP API | https://pncp.gov.br/api/consulta | API pública — integração legítima, não é API privada do alvo |
 | 6 | Painel de Preços | https://paineldeprecos.planejamento.gov.br | consulta pública |
 
@@ -51,7 +51,7 @@ Catálogo de Fornecedores, Cotações, Administração/usuários, e o PDF/XLS do
 Sidebar fixa ~250 px, sempre presente **exceto** nas telas de itens e de pesquisa (que são full-width
 com seta de voltar).
 
-- topo: logo "BDS SISTEMAS", avatar, "Olá, Leandro Santos da Silva"
+- topo: logo "PROPRIO SISTEMAS", avatar, "Olá, Leandro Santos da Silva"
 - alertas: "Contrato vencido a 30 dias", "Questionário pendente"
 - menu: Cesta de Preços → Cestas / Pesquisa rápida de preços / Catálogo de Produtos / Catálogo de Fornecedores
 - Informativos, Sair, "Versão: 202611130732"
@@ -162,14 +162,14 @@ Instituicao 1-n Cotacao n-n Fornecedor, Preco n-1 Fonte.
 Chamadas de rede visíveis ao carregar a home autenticada — servem para nomear as entidades, não para copiar contrato:
 
 ```
-GET api.bdsgp.com.br/auth/check
-GET api.bdsgp.com.br/base/usuarios/eu
-GET api.bdsgp.com.br/base/clientes/{id}
-GET api.bdsgp.com.br/cesta_precos/revendedores
-GET api.bdsgp.com.br/cesta_precos/entidades/niveis
-GET api.bdsgp.com.br/cesta_precos/usuarios/niveis
-GET api.bdsgp.com.br/base/informativos?somenteNaoLidos=true
-GET api.bdsgp.com.br/base/questionarios/
+GET api.propriosgp.com.br/auth/check
+GET api.propriosgp.com.br/base/usuarios/eu
+GET api.propriosgp.com.br/base/clientes/{id}
+GET api.propriosgp.com.br/cesta_precos/revendedores
+GET api.propriosgp.com.br/cesta_precos/entidades/niveis
+GET api.propriosgp.com.br/cesta_precos/usuarios/niveis
+GET api.propriosgp.com.br/base/informativos?somenteNaoLidos=true
+GET api.propriosgp.com.br/base/questionarios/
 ```
 
 ## Feature matrix
@@ -178,9 +178,9 @@ Ver `features.csv`. Must: 14, should: 8, could: 5, skip: 2.
 
 ## Out of scope (cannot or should not be cloned)
 
-- **A base de preços proprietária da BDS** e o histórico acumulado dos clientes deles. Reconstruímos a integração com fontes públicas (PNCP, Painel de Preços), não o acervo deles.
+- **A base de preços proprietária da PROPRIO** e o histórico acumulado dos clientes deles. Reconstruímos a integração com fontes públicas (PNCP, Painel de Preços), não o acervo deles.
 - **Rede de revendas** (CGMS, Cerrado, Colibri, Eldorado, LF, Talski, Tech Bahia, Triângulo, Vilharga): é canal comercial, não funcionalidade.
-- **Marca, logo, textos e identidade visual** da BDS.
+- **Marca, logo, textos e identidade visual** da PROPRIO.
 - **Credenciais/contratos** de acesso a portais que exijam convênio (BPS, PCP podem exigir).
 
 ## Size

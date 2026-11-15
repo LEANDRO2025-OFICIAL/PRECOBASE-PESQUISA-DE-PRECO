@@ -31,5 +31,5 @@ Integração BLL e BNC,integracoes,could,yes,no,
 Pesquisa rápida de preços sem cesta,pesquisa,could,yes,yes,rota /cesta_precos/pesquisa_rapida
 Painel de abrangência e indicadores,dashboard,could,yes,no,contadores "Cestas finalizadas 50435 / 536"
 Pesquisa NPS,feedback,could,yes,no,modal de 5 perguntas a cada carga da lista de cestas
-Base de preços proprietária da BDS,dados,must,yes,skip,acervo deles: usamos fontes públicas
+Base de preços proprietária da PROPRIO,dados,must,yes,skip,acervo deles: usamos fontes públicas
 Rede de revendas,comercial,must,yes,skip,canal comercial não é funcionalidade

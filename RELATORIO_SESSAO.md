@@ -1,6 +1,6 @@
 # Relatório de Execução — Evolução do Clone PreçoBase
 
-**Projeto:** `C:\dev\contratacao-publica\bdsgp-clone`  
+**Projeto:** `C:\dev\contratacao-publica\propriosgp-clone`  
 **Stack:** Next.js 15.5.29 + Postgres local (`precobase`, porta 5432) + Prisma + CSS puro  
 **Servidor:** `http://localhost:3100` (produção, `next start`, destacado via WMI)  
 **Credenciais:** `leandro@precobase.local` / `precobase123`  
@@ -11,10 +11,10 @@
 
 ## Resumo do Escopo
 
-Evoluir o clone **PreçoBase** do BDSGP para:
+Evoluir o clone **PreçoBase** do PrecoBase para:
 1. Emitir documentos oficiais no padrão dos anexos enviados (mapa paisagem, pesquisas unificadas, contratações similares, relatórios por fonte, coleta PDF/DOCX, XLSX TR/Subanexo X/Mapa).
 2. Conectar os catálogos CATMAT e CATSER à elaboração da cesta, exibindo **todos** os produtos que contenham o termo buscado.
-3. Verificar e fazer a integração com outros portais funcionar "perfeitamente igual à BDS".
+3. Verificar e fazer a integração com outros portais funcionar "perfeitamente igual à PROPRIO".
 4. Manter o sistema funcionando em `http://localhost:3100`.
 
 Restrições respeitadas: só fontes públicas e conta do usuário; cesta #175170 no alvo permanece com `posse: CLIENTE` e não foi alterada.
@@ -25,13 +25,13 @@ Restrições respeitadas: só fontes públicas e conta do usuário; cesta #17517
 
 ### 1.1 Modelo de dados (`prisma/schema.prisma`)
 Foram adicionados dois modelos:
-- **`CatalogoItem`**: armazena itens dos catálogos externos com upsert único por `[origem, codigo]` (CATMAT | CATSER | BDS), campos `descricao`, `grupo`, `classe`, `unidade`, `ncm`, `statusItem`, `atualizadoEm`.
+- **`CatalogoItem`**: armazena itens dos catálogos externos com upsert único por `[origem, codigo]` (CATMAT | CATSER | PROPRIO), campos `descricao`, `grupo`, `classe`, `unidade`, `ncm`, `statusItem`, `atualizadoEm`.
 - **`LogImportacaoCatalogo`**: registra cada importação (origem, página, tamanho, registros, inseridos, atualizados, erro).
 
 ### 1.2 Serviço de catálogo (`src/lib/catalogo.ts`)
 - `urlCatalogo()`: monta URL da API `dadosabertos.compras.gov.br` (módulo material `/4_consultarItemMaterial` e módulo serviço `/6_consultarItemServico`).
 - `importarPaginaCatalogo()`: importa uma página paginada (`tamanhoPagina ≥ 10`, máximo 500), faz upsert por `(origem, codigo)` e grava log.
-- `buscarCatalogoUnificado()`: busca textual unificada em CATMAT, CATSER e produtos BDS (por código e descrição), ordenada por origem e descrição.
+- `buscarCatalogoUnificado()`: busca textual unificada em CATMAT, CATSER e produtos PROPRIO (por código e descrição), ordenada por origem e descrição.
 - `listarLogsImportacao()`: logs de importação recentes.
 
 ### 1.3 APIs
@@ -40,8 +40,8 @@ Foram adicionados dois modelos:
 
 ### 1.4 Integração na criação/elaboração da cesta
 Arquivo: `src/app/(app)/cestas/[id]/itens/novo/page.tsx`
-- Sem termo de busca: lista produtos BDS com mais preços no acervo (comportamento padrão anterior).
-- Com termo: exibe **todos** os resultados de CATMAT, CATSER e BDS que contenham o termo, com coluna **Origem** (badge) e inclusão direta via formulário.
+- Sem termo de busca: lista produtos PROPRIO com mais preços no acervo (comportamento padrão anterior).
+- Com termo: exibe **todos** os resultados de CATMAT, CATSER e PROPRIO que contenham o termo, com coluna **Origem** (badge) e inclusão direta via formulário.
 - Ação `adicionarItemCatalogoExterno` em `src/app/(app)/cestas/[id]/itens/actions.ts`: resolve/cria o `Produto` com `codigoBr = ORIGEM:CODIGO`, vincula automaticamente os preços do acervo dentro da janela `priorizarPrecosPraticadosDias` (fallback 12 mais recentes), todos selecionados.
 
 ### 1.5 Validação da API externa
@@ -186,7 +186,7 @@ Todos os scripts auxiliares de migração, verificação e fix foram removidos a
 
 **Subir servidor destacado (WMI):**
 ```powershell
-$cmd = 'cmd.exe /c "cd /d C:\dev\contratacao-publica\bdsgp-clone && set DATABASE_URL=postgresql://postgres:postgres@localhost:5432/precobase?schema=public && set NEXT_PUBLIC_APP_URL=http://localhost:3100 && node node_modules\next\dist\bin\next start -p 3100 > server.log 2>&1"'
+$cmd = 'cmd.exe /c "cd /d C:\dev\contratacao-publica\propriosgp-clone && set DATABASE_URL=postgresql://postgres:postgres@localhost:5432/precobase?schema=public && set NEXT_PUBLIC_APP_URL=http://localhost:3100 && node node_modules\next\dist\bin\next start -p 3100 > server.log 2>&1"'
 Invoke-CimMethod -ClassName Win32_Process -MethodName Create -Arguments @{ CommandLine = $cmd }
 ```
 
@@ -274,4 +274,4 @@ npx prisma generate
 
 ---
 
-*Este documento resume toda a sessão de implementação. Todos os arquivos mencionados estão em `C:\dev\contratacao-publica\bdsgp-clone`.*
+*Este documento resume toda a sessão de implementação. Todos os arquivos mencionados estão em `C:\dev\contratacao-publica\propriosgp-clone`.*

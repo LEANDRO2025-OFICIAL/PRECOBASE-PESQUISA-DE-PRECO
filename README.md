@@ -1,6 +1,6 @@
 # PreçoBase — Pesquisa de Preço
 
-Clone do BDSGP para gestão de pesquisa de preços públicos, emitindo documentos oficiais no padrão dos anexos e conectando os catálogos CATMAT/CATSER à elaboração da cesta.
+Clone do PrecoBase para gestão de pesquisa de preços públicos, emitindo documentos oficiais no padrão dos anexos e conectando os catálogos CATMAT/CATSER à elaboração da cesta.
 
 ## Identidade
 - **Nome:** PreçoBase
@@ -28,7 +28,7 @@ Clone do BDSGP para gestão de pesquisa de preços públicos, emitindo documento
 | `/cestas/nova` | Criar cesta |
 | `/cestas/[id]` | Detalhe da cesta (relatórios, status, documentos) |
 | `/cestas/[id]/itens` | Itens da cesta |
-| `/cestas/[id]/itens/novo` | Adicionar item (catálogo CATMAT/CATSER/BDS ou avulso) |
+| `/cestas/[id]/itens/novo` | Adicionar item (catálogo CATMAT/CATSER/PROPRIO ou avulso) |
 | `/cestas/[id]/itens/[itemId]/pesquisar-fontes` | Pesquisar preços por fonte |
 | `/cestas/[id]/relatorio/[arquivo]` | Download de documentos (PDF/XLSX/DOCX) |
 | `/pesquisa-rapida` | Pesquisa rápida de preços |
@@ -70,7 +70,7 @@ $env:NEXT_PUBLIC_APP_URL="http://localhost:3100"
 npm run build
 
 # Iniciar servidor destacado (WMI)
-$cmd = 'cmd.exe /c "cd /d C:\dev\contratacao-publica\bdsgp-clone && set DATABASE_URL=postgresql://postgres:postgres@localhost:5432/precobase?schema=public && set NEXT_PUBLIC_APP_URL=http://localhost:3100 && node node_modules\next\dist\bin\next start -p 3100 > server.log 2>&1"'
+$cmd = 'cmd.exe /c "cd /d C:\dev\contratacao-publica\propriosgp-clone && set DATABASE_URL=postgresql://postgres:postgres@localhost:5432/precobase?schema=public && set NEXT_PUBLIC_APP_URL=http://localhost:3100 && node node_modules\next\dist\bin\next start -p 3100 > server.log 2>&1"'
 Invoke-CimMethod -ClassName Win32_Process -MethodName Create -Arguments @{ CommandLine = $cmd }
 
 # Acessar: http://localhost:3100

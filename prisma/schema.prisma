@@ -94,7 +94,7 @@ model CategoriaObjeto {
 
 model CatalogoItem {
   id          Int      @id @default(autoincrement()) @map("id")
-  origem      String   @default("CATMAT") @map("origem") // CATMAT | CATSER | BDS
+  origem      String   @default("CATMAT") @map("origem") // CATMAT | CATSER
   codigo      String   @map("codigo") // código do item no catálogo de origem
   descricao   String   @map("descricao")
   grupo       String?  @map("grupo")

@@ -2,7 +2,7 @@
 
 import { prisma } from "@/lib/db";
 
-export type OrigemCatalogo = "CATMAT" | "CATSER" | "BDS";
+export type OrigemCatalogo = "CATMAT" | "CATSER";
 
 /** Monta a URL da API de dados abertos do Compras.gov.br para um catálogo. */
 function urlCatalogo(origem: OrigemCatalogo, pagina: number, tamanho: number, termo?: string): string {
@@ -166,7 +166,7 @@ export async function importarPaginaCatalogo({
 }
 
 /**
- * Busca textual no catálogo unificado (CATMAT + CATSER + produtos BDS).
+ * Busca textual no catálogo unificado (CATMAT + CATSER + produtos próprios).
  * Retorna todos os resultados que contenham o termo, com origem.
  */
 export async function buscarCatalogoUnificado({
@@ -187,7 +187,7 @@ export async function buscarCatalogoUnificado({
   unidade: string | null;
   ncm: string | null;
   statusItem: boolean;
-  tipo: string; // "CATMAT" | "CATSER" | "BDS"
+  tipo: string; // "CATMAT" | "CATSER"
   label: string;
 }>> {
   const termo = (q ?? "").trim();
@@ -216,8 +216,8 @@ export async function buscarCatalogoUnificado({
     take,
   });
 
-  // Produtos BDS (catálogo próprio) — mesclados como origem "BDS"
-  const bds = await prisma.produto.findMany({
+  // Produtos próprios (catálogo próprio) — mesclados como origem "PROPRIO"
+  const proprios = await prisma.produto.findMany({
     where: {
       ativo: true,
       OR: [
@@ -252,9 +252,9 @@ export async function buscarCatalogoUnificado({
       tipo: e.origem,
       label: `${e.codigo} — ${e.descricao}`,
     })),
-    ...bds.map((p) => ({
+    ...proprios.map((p) => ({
       id: p.id,
-      origem: "BDS",
+      origem: "PROPRIO",
       codigo: p.codigoBr,
       descricao: p.descricao,
       grupo: p.grupo ?? null,
@@ -262,13 +262,13 @@ export async function buscarCatalogoUnificado({
       unidade: p.unidade ?? "UN",
       ncm: null,
       statusItem: p.ativo,
-      tipo: "BDS",
+      tipo: "PROPRIO",
       label: `${p.codigoBr} — ${p.descricao}`,
     })),
   ];
 
-  // Ordena: origem primeiro (CATMAT, CATSER, BDS), depois descrição
-  const ordemOrigem: Record<string, number> = { CATMAT: 0, CATSER: 1, BDS: 2 };
+  // Ordena: origem primeiro (CATMAT, CATSER, PROPRIO), depois descrição
+  const ordemOrigem: Record<string, number> = { CATMAT: 0, CATSER: 1, PROPRIO: 2 };
   return resultado.sort((a, b) => {
     const oa = ordemOrigem[a.origem] ?? 99;
     const ob = ordemOrigem[b.origem] ?? 99;

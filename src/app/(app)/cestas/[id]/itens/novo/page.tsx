@@ -51,8 +51,8 @@ export default async function NovoItemPage({
   if (termo) {
     resultados = await buscarCatalogoUnificado({ q: termo, origem: "TODAS", take: 100 });
   } else {
-    // Sem termo: lista produtos BDS com mais preços no acervo (comportamento padrão da página)
-    const produtosBDS = await prisma.produto.findMany({
+    // Sem termo: lista produtos próprios com mais preços no acervo (comportamento padrão da página)
+    const produtosProprios = await prisma.produto.findMany({
       where: { ativo: true },
       include: {
         _count: { select: { precos: true } },
@@ -61,9 +61,9 @@ export default async function NovoItemPage({
       orderBy: { precos: { _count: "desc" } },
       take: 24,
     });
-    resultados = produtosBDS.map((p) => ({
+    resultados = produtosProprios.map((p) => ({
       id: p.id,
-      origem: "BDS",
+      origem: "PROPRIO",
       codigo: p.codigoBr,
       descricao: p.descricao,
       grupo: p.grupo ?? null,
@@ -71,7 +71,7 @@ export default async function NovoItemPage({
       unidade: p.unidade ?? "UN",
       ncm: null,
       statusItem: p.ativo,
-      tipo: "BDS",
+      tipo: "PROPRIO",
       label: `${p.codigoBr} — ${p.descricao}`,
       precoCount: p._count.precos,
       ultimoValor: p.precos[0]?.valor ? Number(p.precos[0].valor) : undefined,
@@ -162,12 +162,12 @@ export default async function NovoItemPage({
                       </thead>
                       <tbody>
                         {resultados.map((r) => {
-                          const externo = r.origem !== "BDS";
-                          const isBds = r.origem === "BDS";
+                          const externo = r.origem !== "PROPRIO";
+                          const isProprio = r.origem === "PROPRIO";
                           return (
                             <tr key={`${r.origem}:${r.codigo}`}>
                               <td className="tiny">
-                                <span className={`badge ${isBds ? "neutral" : "info"} small`}>
+                                <span className={`badge ${isProprio ? "neutral" : "info"} small`}>
                                   {r.origem}
                                 </span>
                               </td>
