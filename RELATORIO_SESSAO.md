@@ -17,7 +17,7 @@ Evoluir o clone **PreçoBase** do PrecoBase para:
 3. Verificar e fazer a integração com outros portais funcionar "perfeitamente igual à PROPRIO".
 4. Manter o sistema funcionando em `http://localhost:3100`.
 
-Restrições respeitadas: só fontes públicas e conta do usuário; cesta #175170 no alvo permanece com `posse: CLIENTE` e não foi alterada.
+Restrições respeitadas: só fontes públicas e conta do usuário; campo "posse" removido do sistema (entrega de pesquisas prontas para verificação do órgão).
 
 ---
 
@@ -255,12 +255,41 @@ npx prisma generate
 - 4 cestas (seed), sem resíduos de E2E.
 - 2 documentos (seed).
 - 0 vínculos órfãos.
-- Cesta #175170 no alvo **não foi alterada nem apagada** (permanece no ambiente alvo, `posse: CLIENTE`).
+- Cesta #175170 no alvo **não foi alterada nem apagada** (permanece no ambiente alvo).
 
 ### Conectores (página `/status`)
 - CATMAT e CATSER: testáveis via API aberta (podem aparecer "Offline" se a rede não alcançar `dadosabertos.compras.gov.br` — comportamento esperado, não erro do sistema).
 - PNCP: testável via `pncp.gov.br/api/consulta/v1`.
 - BLL / BNC / CGU NFE: marcados como "Configurar" (requerem convênio/token).
+
+---
+
+## 7. Como conseguir o catálogo do BDS (produtos, serviços e medicamentos CIMED)
+
+O Wappalyzer do `app.bdsgp.com.br` revelou que o sistema alvo é uma PWA construída com **Flutter + Dart**, servida via **Nginx**, sem API pública documentada diretamente exposta. Para obter o catálogo imenso de produtos, serviços e medicamentos (incluindo a tabela CIMED), use as seguintes fontes públicas:
+
+### 7.1 CATMAT — Catálogo de Materiais
+- **URL:** `https://dadosabertos.compras.gov.br/modulo-material/4_consultarItemMaterial`
+- **Parâmetros obrigatórios:** `pagina` (≥1) e `tamanhoPagina` (≥10)
+- **Parâmetros opcionais:** `descricaoItem` (busca textual), `codigoItem`, `codigoGrupo`, `codigoClasse`, `codigoPdm`, `statusItem`, `bps`, `codigo_ncm`
+- **Resposta:** JSON com `resultado` (array de itens), `totalRegistros`, `totalPaginas`, `paginasRestantes`
+- **Uso no PreçoBase:** importação paginada com upsert por `(origem, codigo)` no modelo `CatalogoItem`
+
+### 7.2 CATSER — Catálogo de Serviços
+- **URL:** `https://dadosabertos.compras.gov.br/modulo-servico/6_consultarItemServico`
+- **Parâmetros obrigatórios:** `pagina` (≥1) e `tamanhoPagina` (≥10)
+- **Parâmetros opcionais:** `codigoSecao`, `codigoDivisao`, `codigoGrupo`, `codigoClasse`, `codigoSubclasse`, `codigoCpc`, `codigoServico`, `exclusivoCentralCompras`, `statusServico`
+- **Uso no PreçoBase:** mesma estratégia de importação paginada do CATMAT
+
+### 7.3 CIMED — Consulta Pública de Medicamentos (ANVISA)
+- **Portal:** `https://cimed.anvisa.gov.br/`
+- A CIMED é a tabela oficial de medicamentos da ANVISA com preços, fabricantes, apresentações e registros
+- Consulta pública disponível no portal da ANVISA (pode exigir navegação via interface web ou sessão autenticada dependendo do endpoint)
+- **Alternativa para importação automática:** usar dados de medicamentos já cadastrados no acervo local do PreçoBase (produtos com grupo "MEDICAMENTOS" / "SAÚDE") ou importar via planilha/arquivo fornecido pelo órgão
+
+### 7.4 Catálogo próprio (Produtos)
+- Os produtos já semeados no banco (`produtos` table) servem como catálogo próprio do PreçoBase, com código BR, descrição, unidade e grupo
+- A busca unificada mescla resultados de CATMAT, CATSER e produtos próprios em uma única tela de inclusão de item na cesta
 
 ---
 
@@ -274,4 +303,4 @@ npx prisma generate
 
 ---
 
-*Este documento resume toda a sessão de implementação. Todos os arquivos mencionados estão em `C:\dev\contratacao-publica\propriosgp-clone`.*
+*Este documento resume toda a sessão de implementação. Todos os arquivos mencionados estão em `C:\dev\contratacao-publica\bdsgp-clone`.*
